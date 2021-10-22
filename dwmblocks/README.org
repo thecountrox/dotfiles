@@ -1,0 +1,43 @@
+#+TITLE: dwmblocks-distrotube
+
+* About Dwmblocks
+#+CAPTION: dwmblocks-distrotube
+#+ATTR_HTML: :alt dwmblocks-distrotube :title dwmblocks-distrotube :align left
+[[https://gitlab.com/dwt1/dotfiles/raw/master/.screenshots/dotfiles05-thumb.png]]
+
+Dwmblocks is a modular status bar for dwm written in c.  This is my personal build of dwmblocks.
+
+* Modifying dwmblocks
+The statusbar is made from text output from scripts found in my [[.local/bin][https://gitlab.com/dwt1/dotfiles/-/tree/master/.local/bin]].  Blocks are added and removed by editing the blocks.h header file.
+
+* Installing dwmblocks-distrotube on Arch Linux
+All you need to do is download the PKGBUILD from this repository.  Then run the following command:
+
+=makepkg -cf=
+
+This will create a file that ends in .pkg.tar.zst (for example, dwmblocks-distrotube-git-6.2-1-x86_64.pkg.tar.zst).  Then run:
+
+=sudo pacman -U *.pkg.tar.zst
+
+Alternatively, you could also install dwmblocks-distrotube-git from my own personal Arch repository.  To do so, add the following to the end of /etc/pacman.conf :
+
+#+begin_example
+[dt-arch-repo]
+SigLevel = Optional DatabaseOptional
+Server = https://gitlab.com/dwt1/$repo/-/raw/master/$arch
+#+end_example
+
+Then, sync the repositories and update your system with:
+=sudo pacman -Syyu=
+
+And, then:
+=sudo pacman -S dwmblocks-distrotube-git=
+
+* To get my dwmblocks to work for you...
+You will, of course, need my dwmblocks build and my scripts in [.local/bin](https://gitlab.com/dwt1/dotfiles/-/tree/master/.local/bin).  Make sure that .local/bin is in your $PATH otherwise you can't call those scripts by name which is what I'm doing in blocks.h.  Instead, you'd have to write out the full path to each script in the blocks.h.
+
+To add .local/bin to $PATH, just add this line to your .bashrc:
+
+#+begin_example
+PATH="$HOME/.local/bin${PATH:+:${PATH}}"
+#+end_example

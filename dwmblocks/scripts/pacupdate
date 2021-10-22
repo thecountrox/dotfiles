@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cupd=$(sudo checkupdates | wc -l)
+echo "$cupd updates "
