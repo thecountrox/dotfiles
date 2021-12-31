@@ -1,11 +1,14 @@
 #! /bin/bash 
+# /usr/bin/dunst-dbus-fix.sh &
 nitrogen --restore &
 dwmblocks &
 xfsettingsd &
-start-pulseaudio-x11 &
 sudo rmmod pcspkr &
-/usr/lib/xfce4/notifyd/xfce4-notifyd &
-/usr/bin/pipewire &
-/usr/bin/pipewire-pulse &
-/usr/bin/pipewire-media-session &
+pipewire &
+pipewire-pulse &
+pipewire-media-session &
 export XDG_SESSION_TYPE=x11 &
+picom &
+wmname LG3D &
+# keepassxc &
+# lxpolkit &

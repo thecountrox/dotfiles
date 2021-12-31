@@ -1,4 +1,4 @@
-/*  ____ _____  */
+
 /* |  _ \_   _|  Derek Taylor (DistroTube) */
 /* | | | || |  	http://www.youtube.com/c/DistroTube */
 /* | |_| || |  	http://www.gitlab.com/dwt1/ */
@@ -39,7 +39,7 @@ static const char col_cyan[]        = "#282a36";
  * 0xdd adds adds a bit more transparency.
  * Play with the value to get desired transparency.
  */
-static const unsigned int baralpha    = 0xff; 
+static const unsigned int baralpha    = 0xdd; 
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]        = {
 	/*               fg         bg         border   */
@@ -53,6 +53,8 @@ static const unsigned int alphas[][3] = {
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
+static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
+static const XPoint stickyiconbb    = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
 /* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; */
@@ -74,12 +76,14 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 #include "layouts.c"
+#include "tcl.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[]=",      tile },    /* first entry is default */
+    { "[]=",      tile },    /* first entry is default */
+    { "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "HHH",      grid },
+    { "|||",      tcl  },
 	{ NULL,       NULL },
 };
 
@@ -109,9 +113,11 @@ static const char *termcmd[]     = { "st", NULL };
 static const char *tabtermcmd[]  = { "tabbed", "-r", "2", "st", "-w", "''", NULL };
 static const char *brupcmd[] = { "xbacklight", "+7", NULL };
 static const char *brdowncmd[] = { "xbacklight", "-7", NULL };
-static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+static const char *upvol[]   = { "inc_vol.sh", NULL };
+static const char *downvol[] = { "dec_vol.sh", NULL};
+static const char *mutevol[] = { "mute_vol.sh",  NULL };
+static const char *togglepicom[] = { "/usr/bin/comp.sh", NULL };
+static const char *pulsemixer[] = { "st", "-e", "pulsemixer", NULL };
 
 static Key keys[] = {
 	/* modifier             chain key  key        function        argument */
@@ -120,14 +126,19 @@ static Key keys[] = {
 	{ Mod1Mask,             -1,        XK_Return, spawn,          {.v = tabtermcmd } },
 	{ 0,                    -1,        XF86XK_MonBrightnessUp,    spawn,  {.v = brupcmd } },
 	{ 0,                    -1,        XF86XK_MonBrightnessDown,  spawn,  {.v = brdowncmd } },
-    { 0,                    -1,        XF86XK_AudioLowerVolume,   spawn,  {.v = downvol } },
+        { 0,                    -1,        XF86XK_AudioLowerVolume,   spawn,  {.v = downvol } },
 	{ 0,                    -1,        XF86XK_AudioMute,          spawn,  {.v = mutevol } },
+        { MODKEY,               -1,        XK_bracketleft,            spawn,  {.v = downvol } },
+        { MODKEY,               -1,        XK_backslash,              spawn,  {.v = mutevol } },
+        { MODKEY,               -1,        XK_bracketright,           spawn,  {.v = upvol   } },
 	{ 0,                    -1,        XF86XK_AudioRaiseVolume,   spawn,  {.v = upvol   } },
-    { MODKEY,               -1,        XK_b,      togglebar,      {0} },
-	{ MODKEY|ShiftMask,     -1,        XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,     -1,        XK_k,      rotatestack,    {.i = -1 } },
+	{ Mod1Mask|ControlMask, -1,        XK_equal,                  spawn,  {.v = togglepicom} },
+        { Mod1Mask|ControlMask, -1,        XK_minus,                  spawn,  {.v = pulsemixer} },
+        { MODKEY,               -1,        XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,     -1,        XK_i,      rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask,     -1,        XK_o,      rotatestack,    {.i = -1 } },
 	{ MODKEY,               -1,        XK_j,      focusstack,     {.i = +1 } },
-    { Mod1Mask,             -1,        XK_Tab,    focusstack,     {.i = +1 } },
+        { Mod1Mask,             -1,        XK_Tab,    focusstack,     {.i = +1 } },
 	{ Mod1Mask,             -1,        -1,        focusstack,     {.i = +1 } },
 	{ MODKEY,               -1,        XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,               -1,        XK_i,      incnmaster,     {.i = +1 } },
@@ -143,12 +154,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,     -1,        XK_Tab,    cyclelayout,    {.i = +1 } },
 	{ MODKEY,               -1,        XK_comma,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,     -1,        XK_space,  togglefloating, {0} },
+        { MODKEY,               -1,        XK_s,      togglesticky,   {0} },
+        { MODKEY,               -1,        XK_f,      togglefullscr,  {0} },
 
     /* Switch to specific layouts */
-	{ MODKEY,               -1,        XK_t,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,               -1,        XK_f,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,               -1,        XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,               -1,        XK_u,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,               -1,        XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,               -1,        XK_g,      setlayout,      {.v = &layouts[3]} },
+    { MODKEY,               -1,        XK_y,      setlayout,      {.v = &layouts[4]} },
 
 	{ MODKEY,               -1,        XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,     -1,        XK_0,      tag,            {.ui = ~0 } },
@@ -161,19 +175,9 @@ static Key keys[] = {
 	
     /* Keybindings for programs using the format SUPER + ALT + "key" */
 	{ MODKEY|Mod1Mask,      -1,        XK_s,      spawn,          CMD("tabbed -r 2 surf -pe x '.surf/html/homepage.html'") },
-	{ MODKEY|Mod1Mask,      -1,        XK_b,      spawn,          CMD("brave") },
+	{ MODKEY|Mod1Mask,      -1,        XK_c,      spawn,          CMD("chromium") },
 	{ MODKEY|Mod1Mask,      -1,        XK_m,      spawn,          CMD("mailspring") },
-	{ MODKEY|Mod1Mask,      -1,        XK_f,      spawn,          CMD("pcmanfm") },
-	
-    /* Dmenu scripts launched with emacs-style keychords SUPER + p followed by "key" */
-	{ MODKEY,               XK_p,      XK_e,      spawn,          CMD("./dmscripts/dm-confedit") },
-	{ MODKEY,               XK_p,      XK_i,      spawn,          CMD("./dmscripts/dm-maim") },
-	{ MODKEY,               XK_p,      XK_k,      spawn,          CMD("./dmscripts/dm-kill") },
-	{ MODKEY,               XK_p,      XK_l,      spawn,          CMD("./dmscripts/dm-logout") },
-	{ MODKEY,               XK_p,      XK_m,      spawn,          CMD("./dmscripts/dm-man") },
-	{ MODKEY,               XK_p,      XK_r,      spawn,          CMD("./dmscripts/dm-reddit") },
-	{ MODKEY,               XK_p,      XK_s,      spawn,          CMD("./dmscripts/dm-websearch") },
-	{ MODKEY,               XK_p,      XK_p,      spawn,          CMD("passmenu") },
+	{ MODKEY|Mod1Mask,      -1,        XK_f,      spawn,          CMD("thunar") },
     
     /* Doom emacs keybindings use the keychord CTRL + e followed by "key" */
 	{ ControlMask,          XK_e,      XK_e,      spawn,          CMD("emacsclient -c -a 'emacs'") },
