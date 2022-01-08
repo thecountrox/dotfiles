@@ -19,3 +19,6 @@ If u wanna use em the lazy way ,
 1) copy em to /opt/ 
 2) rename em like dwm-distrotube-git dwmblocks-distrotube-git st-distrotube-git dmenu-distrotube-git 
 3) then cd into each one of em and run "sudo make clean install".
+
+
+** might plan on making an actual install script xd**
