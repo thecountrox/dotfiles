@@ -11,7 +11,7 @@ so features from his build will be seen here
 
 link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 
-![my dwm build showcase](https://cdn.discordapp.com/attachments/874845882493849631/909029282561552394/unknown.png)
+![my dwm build showcase](https://cdn.discordapp.com/attachments/809664984187404288/932270436480348250/unknown.png)
 
 
 # Installation
