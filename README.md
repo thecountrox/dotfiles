@@ -13,6 +13,11 @@ link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 
 ![my dwm build showcase](https://cdn.discordapp.com/attachments/809664984187404288/932270436480348250/unknown.png)
 
+# Dependencies
+
+1) libxft-bgra (from aur)
+2) ttf-joypixels (from arch community repo)
+3) picom-jonaburg-fix (or picom-jonaburg-git both are from the aur)
 
 # Installation
 If u wanna use em the lazy way ,
