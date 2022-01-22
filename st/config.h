@@ -11,7 +11,7 @@
  * Arch repos and is listed as a dependency for this build. JoyPixels is also
  * a hard dependency and makes colored fonts and emojis possible.
  */
-static char *font = "Iosevka Term:style=Bold:size=11:antialias=true:autohint=true";
+static char *font = "Iosevka Term:style=Medium:size=12:antialias=true:autohint=true";
 static char *font2[] = { 
     "JoyPixels:pixelsize=14:antialias=true:autohint=true",
 };
@@ -103,7 +103,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.95;
+float alpha = 0.75;
 
 /* Terminal colors (16 first used in escape sequence) */
 /* Colorscheme based on the 'Doom One' theme from Doom Emacs */
