@@ -25,5 +25,5 @@ If u wanna use em the lazy way ,
 2) then cd into each one of em and run "sudo make clean install".
 3) Swag
 
-
-** might plan on making an actual install script xd**
+This is now done by the install_dotfiles.sh script in this repo (requires git installed)
+The script will not install the Dependencies for you (for now...)
