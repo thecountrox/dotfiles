@@ -1,5 +1,5 @@
 #!/bin/bash
-install ="sudo make clean install"
+install="sudo make clean install"
 sudo mkdir -p /opt/
 cd /opt/
 sudo git clone https://github.com/thecountrox/dotfiles.git
