@@ -18,6 +18,7 @@ link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 1) libxft-bgra (from aur)
 2) ttf-joypixels (from arch community repo)
 3) picom-jonaburg-fix (or picom-jonaburg-git both are from the aur)
+4) nitrogen (for wallpapers)
 
 # Installation
 If u wanna use em the lazy way ,
@@ -26,4 +27,7 @@ If u wanna use em the lazy way ,
 3) Swag
 
 This is now done by the install_dotfiles.sh script in this repo (requires git installed)
+
 The script will not install the Dependencies for you (for now...)
+however the install_dependencies.sh will install dependencies (or atleast try to)
+if u have a sensible aur helper it would work flawlessly
