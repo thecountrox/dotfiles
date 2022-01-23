@@ -5,7 +5,12 @@ cd /opt/
 sudo git clone https://github.com/thecountrox/dotfiles.git
 cd /opt/dotfiles/
 sudo mv * /opt/
-sudo rm -r /opt/dotfiles
+# picom config install and cleanup
+mkdir -p ~/.config/picom/
+sudo mv /opt/.config/picom/picom.conf ~/.config/picom/picom.conf
+sudo rm -r /opt/dotfiles 
+sudo rm -r /opt/.config/
+# install dwm dwmblocks dmenu st
 cd /opt/dwm/
 $install
 cd /opt/dwmblocks
