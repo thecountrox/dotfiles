@@ -1,0 +1,2 @@
+#!/bin/bash
+maim ~/Pictures/$(date +%s).png & notify-send -c "ScreenShotTaken" "Saved in ~/Pictures"
