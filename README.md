@@ -17,8 +17,14 @@ link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 
 1) libxft-bgra (from aur)
 2) ttf-joypixels (from arch community repo)
-3) picom-jonaburg-fix (or picom-jonaburg-git both are from the aur)
-4) nitrogen (for wallpapers)
+
+# Optional Dependencies
+
+1) picom-jonaburg-fix (or picom-jonaburg-git both are from the aur)
+2) nitrogen (for wallpapers)
+3) maim (from arch community repo)
+4) flameshot (from community repo)
+5) pulsemixer (from community repo)
 
 # Installation
 If u wanna use em the lazy way ,
