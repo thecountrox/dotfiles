@@ -118,27 +118,37 @@ static const char *downvol[] = { "dec_vol.sh", NULL};
 static const char *mutevol[] = { "mute_vol.sh",  NULL };
 static const char *togglepicom[] = { "/usr/bin/comp.sh", NULL };
 static const char *pulsemixer[] = { "st", "-e", "pulsemixer", NULL };
+static const char *flameshot[] = { "flameshot", "gui", NULL };
+static const char *screenshot_clipboard[] = { "maim-clipboard", NULL };
+static const char *screenshot_full_save[] = { "maim-full-save", NULL };
 
 static Key keys[] = {
 	/* modifier             chain key  key        function        argument */
 	{ MODKEY,               -1,        XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,               -1,        XK_Return, spawn,          {.v = termcmd } },
 	{ Mod1Mask,             -1,        XK_Return, spawn,          {.v = tabtermcmd } },
+    
+    /* CUSTOM KEYBINDS */
+
 	{ 0,                    -1,        XF86XK_MonBrightnessUp,    spawn,  {.v = brupcmd } },
 	{ 0,                    -1,        XF86XK_MonBrightnessDown,  spawn,  {.v = brdowncmd } },
-        { 0,                    -1,        XF86XK_AudioLowerVolume,   spawn,  {.v = downvol } },
+    { 0,                    -1,        XF86XK_AudioLowerVolume,   spawn,  {.v = downvol } },
 	{ 0,                    -1,        XF86XK_AudioMute,          spawn,  {.v = mutevol } },
-        { MODKEY,               -1,        XK_bracketleft,            spawn,  {.v = downvol } },
-        { MODKEY,               -1,        XK_backslash,              spawn,  {.v = mutevol } },
-        { MODKEY,               -1,        XK_bracketright,           spawn,  {.v = upvol   } },
+    { MODKEY,               -1,        XK_bracketleft,            spawn,  {.v = downvol } },
+    { MODKEY,               -1,        XK_backslash,              spawn,  {.v = mutevol } },
+    { MODKEY,               -1,        XK_bracketright,           spawn,  {.v = upvol   } },
 	{ 0,                    -1,        XF86XK_AudioRaiseVolume,   spawn,  {.v = upvol   } },
 	{ Mod1Mask|ControlMask, -1,        XK_equal,                  spawn,  {.v = togglepicom} },
-        { Mod1Mask|ControlMask, -1,        XK_minus,                  spawn,  {.v = pulsemixer} },
-        { MODKEY,               -1,        XK_b,      togglebar,      {0} },
+    { Mod1Mask|ControlMask, -1,        XK_minus,                  spawn,  {.v = pulsemixer} },
+    { MODKEY,               -1,        XK_Print,                  spawn,  {.v = flameshot}  },
+    { 0,                    -1,        XK_Print,                         spawn,  {.v = screenshot_clipboard} },
+    { Mod1Mask,             -1,        XK_Print,                  spawn,  {.v = screenshot_full_save} },
+
+    { MODKEY,               -1,        XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,     -1,        XK_i,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,     -1,        XK_o,      rotatestack,    {.i = -1 } },
 	{ MODKEY,               -1,        XK_j,      focusstack,     {.i = +1 } },
-        { Mod1Mask,             -1,        XK_Tab,    focusstack,     {.i = +1 } },
+    { Mod1Mask,             -1,        XK_Tab,    focusstack,     {.i = +1 } },
 	{ Mod1Mask,             -1,        -1,        focusstack,     {.i = +1 } },
 	{ MODKEY,               -1,        XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,               -1,        XK_i,      incnmaster,     {.i = +1 } },
@@ -154,8 +164,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,     -1,        XK_Tab,    cyclelayout,    {.i = +1 } },
 	{ MODKEY,               -1,        XK_comma,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,     -1,        XK_space,  togglefloating, {0} },
-        { MODKEY,               -1,        XK_s,      togglesticky,   {0} },
-        { MODKEY,               -1,        XK_f,      togglefullscr,  {0} },
+    { MODKEY,               -1,        XK_s,      togglesticky,   {0} },
+    { MODKEY,               -1,        XK_f,      togglefullscr,  {0} },
 
     /* Switch to specific layouts */
 	{ MODKEY,               -1,        XK_t,      setlayout,      {.v = &layouts[0]} },
