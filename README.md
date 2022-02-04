@@ -15,7 +15,7 @@ link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 
 # Dependencies
 
-1) libxft-bgra (from aur)
+1) libxft-bgra-git (from aur)
 2) ttf-joypixels (from arch community repo)
 
 # Optional Dependencies
