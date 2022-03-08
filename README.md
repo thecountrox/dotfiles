@@ -17,4 +17,4 @@ Same as the main branch
 
 # Installation
 
-Sane as main branch , script : soon:tm:
+Same as main branch , script : soon:tm:
