@@ -13,7 +13,8 @@ My dwm config is heavily based on the dracula color scheme which I adore
 
 # Dependencies
 
-Same as the main branch
+Same as the main branch and 
+aur/ttf-sarasa-ui-sc
 
 # Installation
 
