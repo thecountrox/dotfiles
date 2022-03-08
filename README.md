@@ -1,11 +1,10 @@
 # dotfiles
 My dotfiles for anyone to use
 
-
+### If you are looking for my newer configs check the latest branch (top left corner)
 This dotfiles contains my dwm , dwmblock , dmenu and st configs.
 
 My dwm config is heavily based on the dracula color scheme which I adore 
-
 all of the dwm related things are patched on TOP of distrotube's dwm build
 so features from his build will be seen here
 
