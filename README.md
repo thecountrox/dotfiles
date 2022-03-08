@@ -27,7 +27,7 @@ link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 5) pulsemixer (from community repo)
 
 # Installation
-If u wanna use em the lazy way , ( ~~JUST USE THE SCRIPT INSTEAD!!~~) the script is broken sorry i got exams
+If u wanna use em the lazy way , ( ~~JUST USE THE SCRIPT INSTEAD!!~~) 
 1) copy em to /opt/ 
 2) then cd into each one of em and run "sudo make clean install".
 3) Swag
