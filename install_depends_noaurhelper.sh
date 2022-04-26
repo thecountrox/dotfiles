@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo pacman -Rdd libxft
 sudo pacman -Syu git sudo base-devel flameshot dunst nitrogen xclip ttf-joypixels ttf-iosevka-nerd maim pamixer
 cd /tmp
