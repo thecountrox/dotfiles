@@ -10,7 +10,7 @@ so features from his build will be seen here
 
 link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 
-![my dwm build showcase](https://media.discordapp.net/attachments/874845882493849631/1047541155748921454/image.png?width=1223&height=688)
+![my dwm build showcase](https://media.discordapp.net/attachments/874845882493849631/1047542343936524388/image.png?width=1223&height=688)
 
 # Dependencies
 
