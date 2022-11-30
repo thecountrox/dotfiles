@@ -1,15 +1,30 @@
 # dotfiles
 My dotfiles for anyone to use
 
-
+### If you are looking for my old configs check the old branch (top left corner)
 This dotfiles contains my dwm , dwmblock , dmenu and st configs.
 
 My dwm config is heavily based on the dracula color scheme which I adore 
+all of the dwm related things are patched on TOP of distrotube's dwm build
+so features from his build will be seen here
 
+link to his dwm build : https://gitlab.com/dwt1/dwm-distrotube
 
-![New dwm pepe poga](https://media.discordapp.net/attachments/874845882493849631/950746541415604234/unknown.png)
-![showcase1](https://media.discordapp.net/attachments/874845882493849631/950746594905579520/unknown.png)
-![showcase2](https://media.discordapp.net/attachments/874845882493849631/950746632985641000/unknown.png)
+![my dwm build showcase](https://media.discordapp.net/attachments/874845882493849631/1047541155748921454/image.png?width=1223&height=688)
+
+# Dependencies
+
+1) libxft-bgra-git (from aur)
+2) ttf-joypixels (from arch community repo)
+3) ttf-sarasa-ui-sc
+
+# Optional Dependencies
+
+1) picom-jonaburg-fix (or picom-jonaburg-git both are from the aur)
+2) nitrogen (for wallpapers)
+3) maim (from arch community repo)
+4) flameshot (from community repo)
+5) pulsemixer (from community repo)
 
 # Dependencies
 
@@ -18,4 +33,4 @@ aur/ttf-sarasa-ui-sc
 
 # Installation
 
-Same as main branch , script : soon:tm:
+Refer old branch
