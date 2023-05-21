@@ -1,3 +1,3 @@
 #!/bin/bash
-connection= $(nmcli -t -f GENERAL.CONNECTION --mode tabular device show $DEVICE | head -n1) | awk '{print $1;}'
-echo $connection
+connection="$(nmcli -t -f GENERAL.CONNECTION --mode tabular device show $DEVICE | head -n1 | awk '{print $1;}')"
+echo -e "$connection"
