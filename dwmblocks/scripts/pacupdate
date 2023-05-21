@@ -1,0 +1,12 @@
+#!/bin/bash
+conn="$(nmcli networking connectivity)"
+if [ "$conn" = "full" ]
+then     
+    cupd=$(sudo timeout 5 checkupdates | wc -l)
+    echo "$cupd updates "
+    if [ $? -ne 0 ]; then
+        echo "??? updates"
+    fi
+else     
+    echo "No connection"
+fi

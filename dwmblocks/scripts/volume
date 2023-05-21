@@ -1,0 +1,15 @@
+#!/bin/bash 
+
+volume=$(pamixer --get-volume)
+is_muted=$(pamixer --get-mute)
+
+if [ "$is_muted" = "true" ]; then
+    echo "🔇 Muted(${volume}%)"
+elif [ "$volume" -ge 0 ] && [ "$volume" -lt 35 ]; then
+  echo "🔈 ${volume}%"
+elif [ "$volume" -ge 35 ] && [ "$volume" -lt 65 ]; then
+  echo "🔉 ${volume}%"
+else
+  echo "🔊 ${volume}%"
+fi
+echo "⁉️ error"
