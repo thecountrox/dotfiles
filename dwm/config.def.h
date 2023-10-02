@@ -1,10 +1,3 @@
-/*  ____ _____  */
-/* |  _ \_   _|  Derek Taylor (DistroTube) */
-/* | | | || |  	http://www.youtube.com/c/DistroTube */
-/* | |_| || |  	http://www.gitlab.com/dwt1/ */
-/* |____/ |_|  	*/ 
-
-/* See LICENSE file for copyright and license details. */
 /* appearance */
 static const unsigned int borderpx = 2;   /* border pixel of windows */
 static const unsigned int snap     = 32;  /* snap pixel */
