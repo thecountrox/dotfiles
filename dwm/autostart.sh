@@ -1,11 +1,9 @@
 #! /bin/bash 
-nitrogen --restore &
-dwmblocks &
-xfsettingsd &
-pipewire &
-pipewire-pulse &
-pipewire-media-session &
 export XDG_SESSION_TYPE=x11 &
+xfsettingsd &
+feh --bg-fill /usr/share/backgrounds/evening-sky.png &
+artix-pipewire-launcher &
+dwmblocks &
 picom &
 wmname LG3D &
 

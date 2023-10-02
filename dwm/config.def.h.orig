@@ -101,7 +101,6 @@ static const char *termcmd[]     = { "st", NULL };
 /* static const char *termcmd[]     = { "st", "-e fish", NULL }; */
 static const char *tabtermcmd[]  = { "tabbed", "-r", "2", "st", "-w", "''", NULL };
 
-
 static Key keys[] = {
 	/* modifier             chain key  key        function        argument */
 	{ MODKEY|ShiftMask,     -1,        XK_Return, spawn,          {.v = dmenucmd } },

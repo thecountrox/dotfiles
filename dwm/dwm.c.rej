@@ -1,0 +1,22 @@
+--- dwm.c
++++ dwm.c
+@@ -54,7 +54,10 @@
+ #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
+ #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
+ #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
+-#define TAGMASK                 ((1 << LENGTH(tags)) - 1)
++#define NUMTAGS					(LENGTH(tags) + LENGTH(scratchpads))
++#define TAGMASK     			((1 << NUMTAGS) - 1)
++#define SPTAG(i) 				((1 << LENGTH(tags)) << (i))
++#define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << LENGTH(tags))
+ #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+ 
+ /* enums */
+@@ -211,6 +214,7 @@ static void tagmon(const Arg *arg);
+ static void tile(Monitor *);
+ static void togglebar(const Arg *arg);
+ static void togglefloating(const Arg *arg);
++static void togglescratch(const Arg *arg);
+ static void toggletag(const Arg *arg);
+ static void toggleview(const Arg *arg);
+ static void unfocus(Client *c, int setfocus);

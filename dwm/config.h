@@ -1,10 +1,3 @@
-
-/* |  _ \_   _|  Derek Taylor (DistroTube) */
-/* | | | || |  	http://www.youtube.com/c/DistroTube */
-/* | |_| || |  	http://www.gitlab.com/dwt1/ */
-/* |____/ |_|  	*/ 
-
-/* See LICENSE file for copyright and license details. */
 /* appearance */
 static const unsigned int borderpx = 1;   /* border pixel of windows */
 static const unsigned int snap     = 24;  /* snap pixel */
@@ -23,8 +16,8 @@ static const char *fonts[]         = { "Sarasa UI SC:style=bold:size=8:antialias
 /* static const char col_gray4[]       = "#ffb86c"; */
 /* static const char col_cyan[]        = "#282a36"; */
 
-static const char col_gray1[]       = "#201c1e";
-static const char col_gray2[]       = "#E5E9F0";
+static const char col_gray1[]       = "#282a36";
+static const char col_gray2[]       = "#f8f8f2";
 static const char col_gray3[]       = "#E5E9F0";
 static const char col_gray4[]       = "#E5E9F0";
 static const char col_cyan[]        = "#9565f1";
@@ -43,6 +36,25 @@ static const char *colors[][3]        = {
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
         [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
+
+//Scratchpads OOOO
+
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {"obsidian", NULL };
+const char *spcmd3[] = {"strawberry", NULL };
+const char *spcmd4[] = {"st", "-n", "pulsemixer", "-g", "120x34", "-e", "pulsemixer", NULL};
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	{"obsidian",    spcmd2},
+	{"strawberry",   spcmd3},
+	{"pulsemixer",   spcmd4},
+};
+
 static const unsigned int alphas[][3] = {
 	/*               fg      bg        border     */
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
@@ -63,10 +75,14 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
+	{ NULL,		  "Obsidian",   NULL,		SPTAG(1),		0,			 -1 },
+	{ NULL,		  "strawberry",	NULL,		SPTAG(2),		1,			 -1 },
+	{ NULL,		  "pulsemixer",	NULL,		SPTAG(3),		1,			 -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -112,10 +128,15 @@ static const char *upvol[]   = { "inc_vol.sh", NULL };
 static const char *downvol[] = { "dec_vol.sh", NULL};
 static const char *mutevol[] = { "mute_vol.sh",  NULL };
 static const char *togglepicom[] = { "comp.sh", NULL };
-static const char *pulsemixer[] = { "st", "-e", "pulsemixer", NULL };
 static const char *flameshot[] = { "flameshot", "gui", NULL };
 static const char *screenshot_clipboard[] = { "maim-clipboard", NULL };
 static const char *screenshot_full_save[] = { "maim-full-save", NULL };
+static const char *player_next[] = { "player-next.sh", NULL};
+static const char *player_prev[] = { "player-prev.sh", NULL};
+static const char *player_pp[] = { "player-pp.sh", NULL};
+static const char *player_stop[] = { "playerctl", "stop", NULL};
+static const char *noise_activate[] = { "pipewire-noise-remove", "start", NULL};
+static const char *noise_deactivate[] = { "pipewire-noise-remove", "stop", NULL};
 
 static Key keys[] = {
 	/* modifier             chain key  key        function        argument */
@@ -134,12 +155,26 @@ static Key keys[] = {
     { MODKEY,               -1,        XK_bracketright,           spawn,  {.v = upvol   } },
 	{ 0,                    -1,        XF86XK_AudioRaiseVolume,   spawn,  {.v = upvol   } },
 	{ Mod1Mask|ControlMask, -1,        XK_equal,                  spawn,  {.v = togglepicom} },
-    { Mod1Mask|ControlMask, -1,        XK_minus,                  spawn,  {.v = pulsemixer} },
+	{ Mod4Mask, -1,        XK_equal,                  spawn,  {.v = noise_activate} },
+	{ Mod4Mask, -1,        XK_minus,                  spawn,  {.v = noise_deactivate} },
+    { Mod1Mask|ControlMask, -1,        XK_minus,                  togglescratch,  {.ui = 3 } },
     { MODKEY,               -1,        XK_Print,                  spawn,  {.v = flameshot}  },
-    { 0,                    -1,        XK_Print,                         spawn,  {.v = screenshot_clipboard} },
+    { 0,                    -1,        XK_Print,                  spawn,  {.v = screenshot_clipboard} },
     { Mod1Mask,             -1,        XK_Print,                  spawn,  {.v = screenshot_full_save} },
+    { Mod1Mask,             -1,        XK_bracketleft,            spawn,  {.v = player_prev} },
+    { Mod1Mask,             -1,        XK_backslash,              spawn,  {.v = player_pp} },
+    { Mod1Mask,             -1,        XK_bracketright,           spawn,  {.v = player_next} },
+    { ControlMask,          -1,        XK_backslash,              spawn,  {.v = player_stop} },
+    { Mod1Mask|ShiftMask,   -1,        XK_f,              spawn,  CMD("ytfzf -D") },
+    { Mod1Mask|ShiftMask,   -1,        XK_k,              spawn,  CMD("dmenu-kill-process") },
+    {MODKEY,                -1,        XK_x,              spawn,  CMD("powermenu") },
+    {Mod1Mask|ShiftMask,    -1,        XK_x,              spawn,  CMD("loginctl poweroff") },
+
 
     { MODKEY,               -1,        XK_b,      togglebar,      {0} },
+	{ MODKEY,               -1,		    XK_y,  	   togglescratch,  {.ui = 0 } },
+	{ MODKEY,               -1,		    XK_u,	   togglescratch,  {.ui = 1 } },
+	{ MODKEY,            -1,			    XK_r,	   togglescratch,  {.ui = 2 } },
 	{ MODKEY|ShiftMask,     -1,        XK_i,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,     -1,        XK_o,      rotatestack,    {.i = -1 } },
 	{ MODKEY,               -1,        XK_j,      focusstack,     {.i = +1 } },
@@ -161,13 +196,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,     -1,        XK_space,  togglefloating, {0} },
     { MODKEY,               -1,        XK_s,      togglesticky,   {0} },
     { MODKEY,               -1,        XK_f,      togglefullscr,  {0} },
-
-    /* Switch to specific layouts */
-	{ MODKEY,               -1,        XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,               -1,        XK_u,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,               -1,        XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,               -1,        XK_g,      setlayout,      {.v = &layouts[3]} },
-    { MODKEY,               -1,        XK_y,      setlayout,      {.v = &layouts[4]} },
+    
+    // No switching set layouts because we are not pussies :muscle:
 
 	{ MODKEY,               -1,        XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,     -1,        XK_0,      tag,            {.ui = ~0 } },
@@ -178,21 +208,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,     -1,        XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,     -1,        XK_period, tagmon,         {.i = +1 } },
 	
-    /* Keybindings for programs using the format SUPER + ALT + "key" */
-	{ MODKEY|Mod1Mask,      -1,        XK_s,      spawn,          CMD("tabbed -r 2 surf -pe x '.surf/html/homepage.html'") },
-	{ MODKEY|Mod1Mask,      -1,        XK_c,      spawn,          CMD("chromium") },
-	{ MODKEY|Mod1Mask,      -1,        XK_m,      spawn,          CMD("mailspring") },
-	{ MODKEY|Mod1Mask,      -1,        XK_f,      spawn,          CMD("thunar") },
+    /* Keybindings for programs using the format SUPER + SHIFT + "key" */
+	{ MODKEY,      -1,        XK_c,      spawn,          CMD("firefox-nightly") },
+  { MODKEY,      -1,        XK_z,      spawn,          CMD("neovide --multigrid --neovim-bin=/home/thecount/.local/bin/lvim") },
+	{ MODKEY,      -1,        XK_t,      spawn,          CMD("thunar") },
     
-    /* Doom emacs keybindings use the keychord CTRL + e followed by "key" */
-	{ ControlMask,          XK_e,      XK_e,      spawn,          CMD("emacsclient -c -a 'emacs'") },
-	{ ControlMask,          XK_e,      XK_b,      spawn,          CMD("emacsclient -c -a 'emacs' --eval '(ibuffer)'") },
-	{ ControlMask,          XK_e,      XK_d,      spawn,          CMD("emacsclient -c -a 'emacs' --eval '(dired nil)'") },
-	{ ControlMask,          XK_e,      XK_m,      spawn,          CMD("emacsclient -c -a 'emacs' --eval '(mu4e)'") },
-	{ ControlMask,          XK_e,      XK_n,      spawn,          CMD("emacsclient -c -a 'emacs' --eval '(elfeed)'") },
-	{ ControlMask,          XK_e,      XK_s,      spawn,          CMD("emacsclient -c -a 'emacs' --eval '(eshell)'") },
-	{ ControlMask,          XK_e,      XK_v,      spawn,          CMD("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'") },
-
 	TAGKEYS(                -1,        XK_1,                      0)
 	TAGKEYS(                -1,        XK_2,                      1)
 	TAGKEYS(                -1,        XK_3,                      2)
