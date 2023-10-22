@@ -1,0 +1,68 @@
+  # Which monitor should the notifications be displayed on.
+  monitor = 0 
+  follow = 
+
+  # Show how many messages are currently hidden (because of geometry).
+  indicate_hidden = 
+
+  # Sort messages by urgency.
+  sort = 
+
+  # Don't remove messages, if the user is idle (no mouse or keyboard input)
+  # for longer than idle_threshold seconds.
+  # Set to 0 to disable.
+  # Transient notifications ignore this setting.
+  idle_threshold = 
+
+  markup = 
+
+  # Show age of message if message is older than show_age_threshold
+  # seconds.
+  # Set to -1 to disable.
+  show_age_threshold = 
+
+  # Merge multiple notifications with the same content
+  stack_duplicates = 
+
+  # Hide the count of merged notifications with the same content
+  hide_duplicate_count = 
+
+  # Display indicators for URLs (U) and actions (A).
+  show_indicators = 
+  dmenu = 
+  browser = 
+
+  # Should a notification popped up from history be sticky or timeout
+  # as if it would normally do.
+  sticky_history = 
+  history_length = 
+
+
+  # Always run rule-defined scripts, 
+  # even if the notification is suppressed
+  always_run_script = 
+  title = 
+  class = 
+  startup_notification = 
+  force_xinerama = 
+
+[experimental]
+  per_monitor_dpi = 
+
+[shortcuts]
+
+  # Available modifiers are ctrl, shift, mod1 (alt)
+  # mod2, mod3 and mod4 (windows-key).
+
+  # Close notification.
+  close = 
+
+  # Close all notifications.
+  close_all = 
+
+  # Redisplay last message(s).
+  history = 
+
+  # action (dmenu)
+  context = 
+# syntax:ssHash
